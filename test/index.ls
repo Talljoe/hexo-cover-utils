@@ -1,11 +1,12 @@
 require! {
   sinon
-  "../src/cover-utils.ls" : sut
+  "../src/index" : sut
   "chai"
 }
 
 {expect} = chai
 chai.use require \chai-sinon
 
-describe "tests" ->
-  specify "should be written"
+getHexo = -> new (require \hexo) __dirname
+
+describe "index" -> specify "should load" -> sut(getHexo!)

@@ -1,1 +1,1 @@
-module.exports = require('./lib/cover-utils')(hexo);
+module.exports = require('./lib/index')(hexo);
