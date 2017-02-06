@@ -18,3 +18,4 @@ deploy:
     tags: true
     repo: Talljoe/hexo-cover-utils
     node: '7'
+    condition: $TRAVIS_EVENT_TYPE != cron
