@@ -1,0 +1,64 @@
+{
+  "name": "hexo-cover-utils",
+  "version": "0.0.0",
+  "description": "Utilities for dealing with cover images including auto-resize and pulling from unsplash.",
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf lib coverage *.tgz",
+    "compile": "lsc -co lib src",
+    "test": "nyc mocha",
+    "cover:report": "nyc report --reporter=text-lcov",
+    "watch": "mocha --watch -R min",
+    "preversion": "npm test",
+    "postversion": "git push --follow-tags",
+    "prepublish": "npm run clean -s && npm run compile -s",
+    "build": "npm run build:clean -s && npm run build:compile -s && npm run build:test -s",
+    "build:clean": "chalk -t '{red ..} {cyan.bold Cleaning}'  && npm run clean -s",
+    "build:compile": "chalk -t '{red ..} {cyan.bold Compiling}'  && npm run compile -s",
+    "build:test": "chalk -t '{red ..} {cyan.bold Testing}' && mocha -R progress"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Talljoe/hexo-cover-utils.git"
+  },
+  "keywords": [
+    "hexo",
+    "filter"
+  ],
+  "author": "Joe Wasson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Talljoe/hexo-cover-utils/issues"
+  },
+  "homepage": "https://github.com/Talljoe/hexo-cover-utils#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-sinon": "^2.8.1",
+    "chalk-cli": "^3.0.0",
+    "livescript": "^1.5.0",
+    "mocha": "^3.2.0",
+    "nyc": "^10.1.2",
+    "sinon": "^1.17.7"
+  },
+  "nyc": {
+    "extension": [
+      ".ls"
+    ],
+    "reporter": [
+      "text-summary",
+      "lcov"
+    ]
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "gm": "^1.23.0",
+    "hexo-fs": "^0.1.6",
+    "node-fetch": "^1.6.3",
+    "prelude-ls": "^1.1.2",
+    "smartcrop-gm": "^1.0.2"
+  }
+}

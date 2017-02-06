@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+- '4'
+- '6'
+- '7'
+script:
+- npm run compile
+- npm test
+after_script:
+- npm install coveralls
+- npm run cover:report -s | `npm bin`/coveralls
+deploy:
+  provider: npm
+  email: joe@npm.talljoe.com
+  api_key:
+    secure: zRO4oOFxmB8G5kVix7sC25nbPaiNVt32IKug/uSnrO8/VVYCL/yD5WKznSR/vKqYn9xng8ePV+ecfLzdHnX06Ks4SRK9wJUCMF3DE0XKBVEYoj2p788Xnu9QV2/652qvDjmllRtr2EXG3ssvxTWgPxBsatKk5ihVEI5MZHaNgH29w6S1gPOg5XI1D/2wLmEJUen7p3k/QNLn1/wy3/rhwxsB17xPP4mzWpG4GNrczIMdurgplywttSOGqx56yLU+RU8ZGbdQzAOXAIpkalbGa5bTxOMPp0VBpHqwuV/8vz8U/9OYlJO9A3sn1YkalYEPgtxfbBWL73hwIipgDy1bVtA/nnjeV0f4nWBM+kJF0TW2FZX7SwCtLBBWPk42BS7hArpce99eZoDdewtfYjia5fN0KSQ9ylf65XnsyAHx0mYciJXrrNJLSVhlOpLEbuF5PxK4SZxwJVtxT9Sw1JeJm5KwyODFqIZyENrLzgU5om0pEXAsLbNhnvF2W7i5a7bjdg7fwp5S9/BNOspGBRodFtSNa4rVyw9sUOPJbCu8SU6K1i/SggPX8SV37IDuB8UVCokRhz8N+A0W05x1d29Zq0IfZbfLCjuhU4MaeIP5rsOsaP+nHPVxu+0gl0ymfIENFRX9Kypf5iK+JOiXKg43Rq173iC9tioI0aoz2PV5z1c=
+  on:
+    tags: true
+    repo: Talljoe/hexo-cover-utils
+    node: '7'
