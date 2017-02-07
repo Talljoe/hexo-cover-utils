@@ -1,11 +1,10 @@
 require! {
-  sinon
   chai: {expect}
-  '../../src/unsplash' : { _parseUnsplash }
+  '../../src/unsplash' : { parseUnsplash }
 }
 
-describe \_parseUnsplash ->
-  sut = _parseUnsplash
+describe \parseUnsplash ->
+  sut = parseUnsplash
   const default_crop = \entropy
 
   specify "it should return undefined for a local file" ->

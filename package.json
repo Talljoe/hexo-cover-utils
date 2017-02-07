@@ -37,12 +37,13 @@
   "homepage": "https://github.com/Talljoe/hexo-cover-utils#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-asserttype": "^1.0.5",
     "chai-sinon": "^2.8.1",
     "chalk-cli": "^3.0.0",
+    "hexo": "^3.2.2",
     "livescript": "^1.5.0",
     "mocha": "^3.2.0",
     "nyc": "^10.1.2",
-    "hexo": "^3.2.2",
     "sinon": "^1.17.7"
   },
   "nyc": {

@@ -7,7 +7,7 @@ module.exports = (hexo) ->
   getProfiles: Func.memoize ->
     result = hexo.model \Data .findById \cover_profiles
     hexo.log.warn "No image profiles defined" unless result?data?
-    result?data
+    result?data ? []
 
   getOutputsForProfile: (cover, profile) -->
     getRecord = (parentName, alt) -->
@@ -17,6 +17,6 @@ module.exports = (hexo) ->
         width: alt.width
         height: alt.height
         name: fullname
-    profile.altSizes
+    profile.altSizes ? []
       |> map (getRecord profile.name)
       |> (++) [getRecord null profile]
