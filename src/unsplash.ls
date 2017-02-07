@@ -1,26 +1,25 @@
+require! {
+  url
+  "node-fetch": fetch
+  "prelude-ls" : { map, flatten, Func }
+  "./profiles"
+}
+
+default_crop = \entropy
+parseUnsplash = ->
+  | it is /unsplash:.+/i =>
+    [,id,crop] = it.split(\:)
+    return
+      id: id
+      crop: crop ? default_crop
+  | it is /https?:\/\/unsplash.com\//i =>
+    u = url.parse it, true
+    if u.query.photo? then
+      id: u.query.photo
+      crop: (u.hash?substring 1) ? default_crop
+
 module.exports = (hexo) ->
-  require! {
-    url
-    "node-fetch": fetch
-    "prelude-ls" : { map, flatten, Func }
-    "./profiles"
-  }
-
   { getOutputsForProfile, getProfiles } = profiles hexo
-
-  default_crop = \entropy
-
-  parseUnsplash = ->
-    | it.startsWith \unsplash: =>
-      [,id,crop] = it.split(\:)
-      return
-        id: id
-        crop: crop ? default_crop
-    | it.startsWith \https://unsplash.com =>
-      u = url.parse it, true
-      return
-        id: u.query.photo
-        crop: (u.hash?substring 1) ? default_crop
 
   getImageInfo = Func.memoize (id) ->
     applicationId = hexo.config.unsplash_appid
@@ -49,3 +48,5 @@ module.exports = (hexo) ->
       |> map ({ name, width, height }) ->
           post[name] = "#{image.urls.raw}?w=#{width}&h=#{height}&fit=crop&crop=#{crop}"
     post.cover = image.urls.full
+
+module.exports._parseUnsplash = parseUnsplash
