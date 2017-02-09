@@ -10,6 +10,8 @@ module.exports = class UnsplashFilter
   (@hexo) ~>
     @hexo.extend.filter.register \before_post_render @_main
     { @getOutputsForProfile, @getProfiles } = profiles @hexo
+    @getImageInfo = Func.memoize @_getImageInfo
+
 
   default_crop = \entropy
 
@@ -45,9 +47,7 @@ module.exports = class UnsplashFilter
     post.cover = image.urls.full
     return post
 
-  getImageInfo: Func.memoize @~_getImageInfo
-  _getImageInfo: (id) ->
-    @hexo.log.info id
+  _getImageInfo: (id) ~>
     applicationId = @hexo.config.unsplash_appid
     unless applicationId?
       @hexo.log.warn "No Unsplash app id configured."
