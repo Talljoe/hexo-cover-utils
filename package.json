@@ -1,6 +1,6 @@
 {
   "name": "hexo-cover-utils",
-  "version": "0.0.2-0",
+  "version": "0.0.2",
   "description": "Utilities for dealing with cover images including auto-resize and pulling from unsplash.",
   "files": [
     "index.js",
