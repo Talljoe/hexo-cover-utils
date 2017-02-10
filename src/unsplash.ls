@@ -23,9 +23,14 @@ module.exports = class UnsplashFilter
         crop: crop ? default_crop
     | it is /https?:\/\/unsplash.com\//i =>
       u = url.parse it, true
-      if u.query.photo? then
-        id: u.query.photo
-        crop: (u.hash?substring 1) ? default_crop
+      crop = (u.hash?substring 1) ? default_crop
+      switch
+        | u.query.photo? =>
+          id: that
+          crop: crop
+        | /photos\/([^/]+)/i .exec u.path =>
+          id: that.1
+          crop: crop
 
   _main: (post) ~>
     unsplash = @@parseUnsplash post.cover

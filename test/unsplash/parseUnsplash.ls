@@ -44,6 +44,9 @@ describe \parseUnsplash ->
     specify "it should match upper case url" ->
       expect(sut "HTTPS://UNSPLASH.COM/?photo=37121").to.not.be.undefined
 
+    specify "it should match upper case photos url" ->
+      expect(sut "HTTPS://UNSPLASH.COM/PHOTOS/37121").to.not.be.undefined
+
     specify "it should not match upper case query string" ->
       expect(sut "https://unsplash.com/?PHOTO=37121").to.be.undefined
 
@@ -76,5 +79,17 @@ describe \parseUnsplash ->
     context "from following page" ->
       const expected_id = \65kl03
       result = sut "https://unsplash.com/following?photo=" + expected_id
+
+      specify "it should return id" -> expect(result.id).to.equal expected_id
+
+    context "from photo page" ->
+      const expected_id = \65kl03
+      result = sut "https://unsplash.com/photos/" + expected_id
+
+      specify "it should return id" -> expect(result.id).to.equal expected_id
+
+    context "from photo page with trailing path" ->
+      const expected_id = \65kl03
+      result = sut "https://unsplash.com/photos/#{expected_id}/foo"
 
       specify "it should return id" -> expect(result.id).to.equal expected_id

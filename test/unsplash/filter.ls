@@ -25,7 +25,6 @@ describe "registration" ->
   specify "should register a function" ->
     expect spy.args[0][1] .to .be .function()
 
-
 context "should not modify post" ->
   var getImageInfoStub
   var sut
