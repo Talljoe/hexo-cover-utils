@@ -38,11 +38,11 @@ module.exports = class UnsplashFilter
     { id, crop } = unsplash
 
     (image) <~! Promise.resolve @getImageInfo id .then
-    return post unless image?urls?raw? and image?urls?full?
+    return post unless image? and image.urls?raw? and image.urls?full?
 
     post.imageCreditUnsplash = id
-    post.imageCreditName? = image?user?name
-    post.imageCreditUrl? = image?user?links?html
+    post.imageCreditName? = image.user?name
+    post.imageCreditUrl? = image.user?links?html
 
     @getOutputs \cover
       |> map ({ name, width, height }) ~>
