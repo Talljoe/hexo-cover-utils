@@ -4,7 +4,6 @@ require! {
   proxyquire
   bluebird: Promise
   'node-fetch' : { Response }
-  'prelude-ls': { filter }
 }
 
 chai.use require \chai-sinon

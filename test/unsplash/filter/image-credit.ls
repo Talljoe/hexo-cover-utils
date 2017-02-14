@@ -1,13 +1,8 @@
 require! {
   sinon
-  chai
-  bluebird: Promise
+  chai: { expect }
   proxyquire
-  'prelude-ls': { keys, any, filter }
-  '../../../src/unsplash' : unsplash
 }
-
-{expect} = chai
 
 getHexo = -> new (require \hexo) __dirname
 
