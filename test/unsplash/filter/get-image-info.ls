@@ -12,16 +12,16 @@ chai.use require \chai-sinon
 
 getHexo = -> new (require \hexo) __dirname
 
-getSut = (hexo, { appid = null, response = null, status = null, stub = null }) ->
+getSut = (hexo, { appid, response, responseText, status, stub }) ->
   hexo.config.unsplash_appid = appid
   sinon.stub hexo.log
 
   fetchStub = stub ? sinon.stub!
-  if response?
+  if not stub? or response? or responseText?
     fetch-response =
-      new Response JSON.stringify response
-      |> Promise.resolve
-    fetchStub.returns fetch-response, { status }
+      new Response (responseText ? JSON.stringify response), do
+        status: status
+    fetchStub.returns Promise.resolve fetch-response
 
   hexo |> proxyquire '../../../src/unsplash' do
     'node-fetch': fetchStub
@@ -31,7 +31,9 @@ describe 'get image info' ->
   describe 'missing app id' ->
     hexo = getHexo!
     fetchStub = sinon.stub!
-    sut = getSut hexo, stub: fetchStub
+    sut = getSut hexo, do
+      appid: null
+      stub: fetchStub
 
     result = sut._getImageInfo \id
 
@@ -47,13 +49,20 @@ describe 'get image info' ->
   describe 'photo not found' ->
     expected-result = null
 
-    sut = getSut getHexo!, status: 404, response: "404 NOT FOUND"
+    hexo = getHexo!
+    sut = getSut hexo, do
+      appid: \id
+      status: 404
+      responseText: "404 NOT FOUND"
     result = sut._getImageInfo \id
 
     specify 'it should return null promise' ->
       result.then -> expect it .to .be .null
 
-  describe 'photo is found' ->
+    specify 'it should log info' ->
+      expect hexo.log.info .to .be .called
+
+  describe 'photo found' ->
     expected-result = hello: 'there'
     expected-appid = 'myappid'
     photo-id = '123'
