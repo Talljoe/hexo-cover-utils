@@ -1,5 +1,5 @@
 require! chai
 
 describe \unsplash ->
-  require! './unsplash/parseUnsplash'
+  require! './unsplash/parse'
   require! './unsplash/filter'
