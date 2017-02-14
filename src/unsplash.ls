@@ -9,7 +9,7 @@ require! {
 module.exports = class UnsplashFilter
   (@hexo) ~>
     @hexo.extend.filter.register \before_post_render @_main
-    { @getOutputsForProfile, @getProfiles } = profiles @hexo
+    { @getOutputs } = profiles @hexo
     @getImageInfo = Func.memoize @_getImageInfo
 
 
@@ -44,9 +44,7 @@ module.exports = class UnsplashFilter
     post.imageCreditName? = image?user?name
     post.imageCreditUrl? = image?user?links?html
 
-    @getProfiles!
-      |> map @getOutputsForProfile \cover
-      |> flatten
+    @getOutputs \cover
       |> map ({ name, width, height }) ~>
           post[name] = "#{image.urls.raw}?w=#{width}&h=#{height}&fit=crop&crop=#{crop}"
     post.cover = image.urls.full

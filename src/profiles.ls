@@ -1,15 +1,15 @@
 require! {
-  'prelude-ls': { Func, compact, map }
+  'prelude-ls': { Func, compact, map, flatten }
   path
 }
 
 module.exports = (hexo) ->
-  getProfiles: Func.memoize ->
+  _get = Func.memoize ->
     result = hexo.model \Data .findById \cover_profiles
     hexo.log.warn "No image profiles defined" unless result?data?
     result?data ? []
 
-  getOutputsForProfile: (cover, profile) -->
+  getOutputsForProfile = (cover, profile) -->
     getRecord = (parentName, alt) -->
       covername = path.basename(cover, path.extname(cover))
       fullname = [covername, parentName, alt.name] |> compact |> (.join \_)
@@ -20,3 +20,7 @@ module.exports = (hexo) ->
     profile.altSizes ? []
       |> map (getRecord profile.name)
       |> (++) [getRecord null profile]
+
+  return do
+    getProfiles: _get
+    getOutputs: (cover) -> _get! |> map getOutputsForProfile cover |> flatten

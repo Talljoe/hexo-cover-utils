@@ -7,7 +7,7 @@ module.exports = (hexo) ->
     "./profiles"
   }
 
-  { getOutputsForProfile, getProfiles } = profiles hexo
+  { getOutputs, getProfiles } = profiles hexo
 
   getOutputName = (inputName, name) ->
     pathParts = path.parse inputName
@@ -55,9 +55,7 @@ module.exports = (hexo) ->
       post: post._id
       slug: post.cover
     return unless asset?
-    getProfiles!
-      |> map getOutputsForProfile post.cover
-      |> flatten
+    getOutputs post.cover
       |> map ({name}) -> post[name] = getOutputName post.cover, name
 
   hexo.extend.generator.register \cover_resize, ->
