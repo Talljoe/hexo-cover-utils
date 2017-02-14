@@ -56,10 +56,11 @@ module.exports = class UnsplashFilter
     applicationId = @hexo.config.unsplash_appid
     unless applicationId?
       @hexo.log.warn "No Unsplash app id configured."
-      return null
+      return Promise.resolve null
     url = "https://api.unsplash.com/photos/#{id}?client_id=#{applicationId}"
     fetch url
       .then ~>
-        @hexo.log.info "Image #{id} result: #{it.statusText}" unless it.ok
-        it
-      .then (.json!)
+        if it.ok then it.json!
+        else
+          @hexo.log.info "Image #{id} result: #{it.statusText}"
+          null
