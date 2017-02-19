@@ -2,7 +2,7 @@ require! {
   url
   bluebird: Promise
   "node-fetch": fetch
-  "prelude-ls" : { map, flatten, Func }
+  "prelude-ls" : { each, flatten, Func }
   "./profiles"
 }
 
@@ -45,7 +45,7 @@ module.exports = class UnsplashFilter
     post.imageCreditUrl? = image.user?links?html
 
     @getOutputs \cover
-      |> map ({ name, width, height }) ~>
+      |> each ({ name, width, height }) ~>
           post[name] = "#{image.urls.raw}?w=#{width}&h=#{height}&fit=crop&crop=#{crop}"
     post.cover = image.urls.full
     return post

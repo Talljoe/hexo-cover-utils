@@ -5,3 +5,4 @@ describe \filter ->
   require! './filter/should-not-modify-post'
   require! './filter/get-image-info'
   require! './filter/image-credit'
+  require! './filter/profiles'

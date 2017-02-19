@@ -37,6 +37,7 @@
   "homepage": "https://github.com/Talljoe/hexo-cover-utils#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-arrays": "0.0.1",
     "chai-asserttype": "^1.0.5",
     "chai-sinon": "^2.8.1",
     "chalk-cli": "^3.0.0",
