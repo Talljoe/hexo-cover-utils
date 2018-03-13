@@ -1,5 +1,5 @@
 require! {
-  url
+  url : { URL }
   bluebird: Promise
   "node-fetch": fetch
   "prelude-ls" : { each, flatten, Func }
@@ -22,13 +22,13 @@ module.exports = class UnsplashFilter
         id: id
         crop: crop ? default_crop
     | it is /https?:\/\/unsplash.com\//i =>
-      u = url.parse it, true
-      crop = (u.hash?substring 1) ? default_crop
+      u = new URL it
+      crop = if (u.hash?length < 2) then default_crop else (u.hash?substring 1)
       switch
-        | u.query.photo? =>
-          id: that
+        | u.searchParams.has \photo =>
+          id: u.searchParams.get \photo
           crop: crop
-        | /photos\/([^/]+)/i .exec u.path =>
+        | /photos\/([^/]+)/i .exec u.pathname =>
           id: that.1
           crop: crop
 
@@ -46,7 +46,13 @@ module.exports = class UnsplashFilter
 
     @getOutputs \cover
       |> each ({ name, width, height }) ~>
-          post[name] = "#{image.urls.raw}?w=#{width}&h=#{height}&fit=crop&crop=#{crop}"
+          imgUrl = new URL image.urls.raw
+          imgUrl.searchParams
+            ..append(\w, width)
+            ..append(\h, height)
+            ..append(\fit, \crop)
+            ..append(\crop, crop)
+          post[name] = imgUrl.toString!
     post.cover = image.urls.full
     return post
 

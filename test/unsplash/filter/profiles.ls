@@ -12,8 +12,8 @@ chai.use require 'chai-arrays'
 getHexo = -> new (require \hexo) __dirname
 
 describe "profiles" ->
-  rawUrl = "/img.raw"
-  fullUrl = "/img.full"
+  rawUrl = "http://example.com/img.raw?has_query=true"
+  fullUrl = "http://example.com/img.full"
 
   var result
 
@@ -81,7 +81,7 @@ describe "profiles" ->
       expect result.cover_foo .to .not .be .undefined
 
     specify "it should set the path" ->
-      result.cover_foo |> url.parse |> -> expect it.pathname .to .equal rawUrl
+      result.cover_foo |> url.parse |> -> expect it.pathname .to .equal "/img.raw"
 
     specify "it should set the height" ->
       result.cover_foo |> url.parse _, true |> -> expect it.query.h .to .equal "#{expected-height}"

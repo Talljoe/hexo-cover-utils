@@ -1,6 +1,6 @@
 {
   "name": "hexo-cover-utils",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Utilities for dealing with cover images including auto-resize and pulling from unsplash.",
   "files": [
     "index.js",
@@ -11,6 +11,7 @@
     "clean": "rm -rf lib coverage *.tgz",
     "compile": "lsc -co lib src",
     "test": "nyc mocha",
+    "tap": "nyc mocha -R tap",
     "cover:report": "nyc report --reporter=text-lcov",
     "watch": "mocha --watch -R min",
     "preversion": "npm test",
