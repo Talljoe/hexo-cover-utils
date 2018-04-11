@@ -7,7 +7,7 @@ require! {
 getHexo = -> new (require \hexo) __dirname
 
 context "image credits" ->
-  context "when image has with full information" ->
+  context "when image has full information" ->
     build-case do
       expected-id: "id"
       expected-name: "My Name"

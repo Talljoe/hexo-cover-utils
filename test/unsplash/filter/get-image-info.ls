@@ -27,7 +27,7 @@ getSut = (hexo, { appid, response, responseText, status, stub }) ->
 
 
 describe 'get image info' ->
-  describe 'missing app id' ->
+  describe 'when app id is missing' ->
     hexo = getHexo!
     fetchStub = sinon.stub!
     sut = getSut hexo, do
@@ -45,7 +45,7 @@ describe 'get image info' ->
     specify 'it should return null promise' ->
       result.then -> expect it .to .be .null
 
-  describe 'photo not found' ->
+  describe 'when photo is not found' ->
     expected-result = null
 
     hexo = getHexo!
@@ -61,7 +61,7 @@ describe 'get image info' ->
     specify 'it should log info' ->
       expect hexo.log.info .to .be .called
 
-  describe 'photo found' ->
+  describe 'when photo is found' ->
     expected-result = hello: 'there'
     expected-appid = 'myappid'
     photo-id = '123'

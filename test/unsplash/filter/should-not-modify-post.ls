@@ -10,7 +10,7 @@ require! {
 
 getHexo = -> new (require \hexo) __dirname
 
-context "should not modify post" ->
+context "it should not modify post" ->
   var getImageInfoStub
   var sut
 
@@ -22,19 +22,19 @@ context "should not modify post" ->
     getImageInfoStub.restore!
 
   cases =
-    "when no cover": -> {}
-    "when cover and no image": -> { cover: void }
-    "when cover and local image": -> { cover: \cover.jpg }
-    "when unsplash cover and can't get image data": ->
+    "when there is no cover": -> {}
+    "when there is a cover and no image": -> { cover: void }
+    "when there is a cover and local image": -> { cover: \cover.jpg }
+    "when there is an unsplash cover and can't get image data": ->
       getImageInfoStub.returns Promise.resolve void
       { cover: "unsplash:abc" }
-    "when unsplash cover and image data is missing urls": ->
+    "when there is an unsplash cover and image data is missing urls": ->
       getImageInfoStub.returns Promise.resolve {}
       { cover: "unsplash:abc" }
-    "when unsplash cover and image data is missing raw url": ->
+    "when there is an unsplash cover and image data is missing raw url": ->
       getImageInfoStub.returns Promise.resolve { url: { raw: "raw.jpg" } }
       { cover: "unsplash:abc" }
-    "when unsplash cover and image data is missing full url": ->
+    "when there is an unsplash cover and image data is missing full url": ->
       getImageInfoStub.returns Promise.resolve { url: { full: "full.jpg" } }
       { cover: "unsplash:abc" }
 
